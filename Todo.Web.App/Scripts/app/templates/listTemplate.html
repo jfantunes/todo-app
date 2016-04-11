@@ -1,0 +1,21 @@
+﻿
+     <% if (_.isEmpty(tasks)){ %>
+      <div class="alert alert-warning">
+        <p>There are currently no Tasks. Please create one.</p>
+      </div>
+    <% } else {%>
+    <table style="border-collapse: separate;border-spacing: 50px 0;">
+      <tr>
+      <th>Description</th>
+      <th>Name</th>
+    </tr>
+    <% _.each(tasks, function (task) { %>
+        <tr>
+         <td><%= task.Description %></td>
+         <td><%= task.Name %></td>
+         <td><a href="#task/edit/<%= task.Id %>">Edit</a></td>
+         <td><a href="#task/delete/<%= task.Id %>">Delete</a></td>
+        </tr>
+    <% }); %>
+    </table>
+    <% } %>

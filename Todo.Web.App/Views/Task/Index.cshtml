@@ -1,0 +1,30 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/base/css")
+
+</head>
+
+<body>
+    <h1>Todo List</h1>
+    <br />
+    <p><a href="#task/create">Create Task</a></p>
+    <br />
+    <div id="taskListContainer" style=" max-height:300px;overflow-y:auto"></div>
+    <br />
+    <br />
+    <div id="taskForm"></div>
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    <script data-main="../../Scripts/app/main.js" src="../../Scripts/libs/require.js"></script>
+  
+
+
+</body>
+</html>
