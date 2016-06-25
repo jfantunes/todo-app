@@ -6,10 +6,9 @@ using Todo.Web.App.Models.Context;
 
 namespace Todo.Web.App.Models.Repository
 {
-    public class TaskRepository
+    public class TaskRepository:ITaskRepository
     {
         private TaskContext db = new TaskContext();
-
 
         //Query Methods
 

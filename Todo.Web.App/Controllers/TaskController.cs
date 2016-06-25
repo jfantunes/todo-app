@@ -6,11 +6,16 @@ using System.Web.Mvc;
 using Todo.Web.App.Models;
 using Todo.Web.App.Models.Repository;
 
-namespace Todo.Web.App.Controllers
+namespace Todo.Web.App.MailService
 {
     public class TaskController : Controller
     {
-        private TaskRepository repository = new TaskRepository();
+        protected ITaskRepository repository;
+    
+        public TaskController(ITaskRepository repository)
+        {
+            this.repository = repository;
+        }
 
         public ActionResult Index()
         {
@@ -27,7 +32,7 @@ namespace Todo.Web.App.Controllers
             {
                 if (id.HasValue)
                 {
-                    Task task = repository.FindTaskById(id.Value);
+                    Task task = this.repository.FindTaskById(id.Value);
                     if (task != null)
                         return Json(new { Success="False", responseText="Couldnt get task"});
                     else
@@ -35,7 +40,7 @@ namespace Todo.Web.App.Controllers
                 }
                 else
                 {
-                    List<Task> tasks = repository.GetAllTasks().ToList();
+                    List<Task> tasks = this.repository.GetAllTasks().ToList();
                     return Json(tasks, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -53,7 +58,7 @@ namespace Todo.Web.App.Controllers
         {
             try
             {
-                var editedTask = repository.EditTask(id, task);
+                var editedTask = this.repository.EditTask(id, task);
                 if (editedTask != null)
                     return Json(editedTask, JsonRequestBehavior.DenyGet);
                 else
@@ -75,7 +80,7 @@ namespace Todo.Web.App.Controllers
         {
             try
             {
-                var addedTask = repository.AddTask(task);
+                var addedTask = this.repository.AddTask(task);
                 return Json(addedTask, JsonRequestBehavior.DenyGet);
             }
             catch (Exception e)
@@ -89,7 +94,7 @@ namespace Todo.Web.App.Controllers
         {
             try
             {
-                var deletedTask = repository.DeleteTask(id);
+                var deletedTask = this.repository.DeleteTask(id);
                 if (deletedTask != null)
                     return Json(deletedTask, JsonRequestBehavior.DenyGet);
                 else
@@ -102,6 +107,28 @@ namespace Todo.Web.App.Controllers
             }
         
         }
+
+
+        public bool DeleteTasks(int id)
+        {
+            try
+            {
+                var deletedTask = this.repository.DeleteTask(id);
+                if (deletedTask != null)
+                {
+                    return true;
+                }
+                else
+                    return false;
+
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+        }
+
 
     }
 }
